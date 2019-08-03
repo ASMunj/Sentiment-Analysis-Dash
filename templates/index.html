@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sentiment Analyzer</title>
+    <!-- Bootstrap 4 Css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'index.css') }}">
+
+</head>
+
+<body>
+
+    <!-- Loader -->
+    <div id="loader"></div>
+
+    <!-- navbar -->
+    <div class="pos-f-t">
+        <div class="collapse" id="navbarToggleExternalContent">
+            <div class="bg-dark p-4">
+                <h5 class="text-white h4">Natural Language Processing</h5>
+                <span class="text-muted">Generalized Text Sentiment Analyzer.</span>
+            </div>
+        </div>
+        <nav class="navbar navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+    </div>
+    <!-- End of Navbar -->
+
+    <div class="container main-page-wrapper">
+        <!-- Banner -->
+        <div class="banner">
+            <div class="banner-left">
+                <h1 class="banner-left-heading">Sentiment Analyzer</h1>
+                <p class="banner-left-text">Language: English</p>
+            </div>
+            <div class="banner-right">
+                <p class="banner-right-text">
+                    Classify English language text as Positive or Negative based on the opinion.
+                    <br> Detect if the text is Subjective or Objective.
+                    <br> <i>Trained on product and services reviews.</i>
+                </p>
+            </div>
+        </div>
+        <!-- Main area container beginning-->
+        <div class="main-area">
+            <!-- Form start -->
+            <div class="form-container">
+                <form class="form" action="\analyze_text" , method="POST">
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder = "{{ input_text_template }}" rows="10" name='input_text' autocomplete="off"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Analyze</button>
+                </form>
+            </div>
+            <!-- End of form area -->
+            <!-- Beginning of results-container -->
+            <div class="results-container">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="th-left">Sentiment</th>
+                            <th scope="col" class="th-right">Prediction Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="sentiment-label" style="color: {{ tag_color }}">{{ sentiment_temp_label }}</td>
+                            <td class="sentiment-confidence" style="color: {{ tag_color }}">{{ sentiment_temp_confidence }}</td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                            <tr>
+                                <th scope="col" class="th-left">Subjective | Objective</th>
+                                <th scope="col" class="th-right">Subjectivity Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="sentiment-label" style="color: dodgerblue">{{ subjectivity_label }}</td>
+                                <td class="sentiment-confidence" style="color: dodgerblue">{{ subjectivity_level }}</td>
+                            </tr>
+                        </tbody>
+                </table>
+                <!-- End of table -->
+            </div>
+            <!-- End of results container -->
+        </div>
+        <!-- End of main area -->
+
+    </div>
+    <!-- End of main-page-wrapper -->
+    <footer class="container py-5 footer">
+            <div class="row">
+              <div class="col-12 col-md">
+                <a href="http://iotaanalytics.com/">
+                    <img src="{{ url_for('static', filename = 'logo.png') }}" width="55" height="24" alt="IOTA ANALYTICS">
+                </a>
+                <small class="d-block mb-3 text-muted">2018</small>
+              </div>
+              <div class="col-6 col-md">
+                <h5>Features</h5>
+                <ul class="list-unstyled text-small">
+                  <li><a class="text-muted" href="#">Sentiment Analysis</a></li>
+                  <li><a class="text-muted" href="#">Subjectivity Level Analysis</a></li>
+                </ul>
+              </div>
+              <div class="col-6 col-md">
+                <h5>IDS Infotech</h5>
+                <ul class="list-unstyled text-small">
+                  <li><a class="text-muted" href="https://idsil.com/" target="_blank">Company</a></li>
+                  <li><a class="text-muted" href="https://www.linkedin.com/company/idsinfotech/?originalSubdomain=in" target="_blank">LinkedIn</a></li>
+                </ul>
+              </div>
+              <div class="col-6 col-md">
+                <h5>IOTA Analytics</h5>
+                <ul class="list-unstyled text-small">
+                  <li><a class="text-muted" href="http://iotaanalytics.com/" target="_blank">Company</a></li>
+                  <li><a class="text-muted" href="https://www.linkedin.com/company/iota-analytics/" target="_blank">LinkedIn</a></li>
+                </ul>
+              </div>
+            </div>
+          </footer>
+
+    <!-- Bootstrap 4 Javascript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
